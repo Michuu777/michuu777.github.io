@@ -22,7 +22,7 @@ body {
     overflow: hidden;
 }
 
-/* OKIENKO */
+/* OKIENKO – DESKTOP */
 .box {
     background: #fff7f7;
     padding: 34px 40px;
@@ -32,7 +32,6 @@ body {
     max-width: 92%;
     box-shadow: 0 14px 35px rgba(255, 105, 135, 0.35);
     z-index: 2;
-    position: relative;
 }
 
 /* NAGŁÓWEK */
@@ -50,7 +49,6 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 22px;
-    position: relative;
 }
 
 button {
@@ -85,7 +83,7 @@ button {
     font-weight: bold;
 }
 
-/* SERDUSZKA — BEZ ZMIAN */
+/* SERDUSZKA */
 .heart {
     position: fixed;
     bottom: -20px;
@@ -96,13 +94,45 @@ button {
 }
 
 @keyframes floatUp {
-    from {
-        transform: translateY(0);
-        opacity: 1;
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* ===================== */
+/* 📱 MOBILE FIX */
+/* ===================== */
+@media (max-width: 600px) {
+
+    body {
+        align-items: center;
+        padding: 20px;
     }
-    to {
-        transform: translateY(-110vh);
-        opacity: 0;
+
+    .box {
+        width: 100%;
+        padding: 26px 20px;
+        border-radius: 20px;
+    }
+
+    h1 {
+        font-size: 22px;
+        white-space: normal;   /* POZWÓL ZŁAMAĆ TEKST */
+        margin-bottom: 24px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 17px;
+        padding: 14px 0;
+    }
+
+    #message {
+        font-size: 16px;
     }
 }
 </style>
@@ -133,11 +163,18 @@ const yesBtn = document.getElementById("yes");
 const msg = document.getElementById("message");
 const countdown = document.getElementById("countdown");
 
-/* NIE UCIEKA — ALE PRZEZ TRANSFORM (BEZ BLOKADY) */
+/* NIE UCIEKA – TRANSFORM (SAFE NA MOBILE) */
 noBtn.addEventListener("mouseenter", () => {
     const x = (Math.random() * 300 - 150);
     const y = (Math.random() * 160 - 80);
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    noBtn.style.transform = translate(${x}px, ${y}px);
+});
+
+/* MOBILE: tap też działa */
+noBtn.addEventListener("touchstart", () => {
+    const x = (Math.random() * 200 - 100);
+    const y = (Math.random() * 120 - 60);
+    noBtn.style.transform = translate(${x}px, ${y}px);
 });
 
 /* TAK */
@@ -163,10 +200,10 @@ setInterval(() => {
     const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const m = Math.floor((diff / (1000 * 60)) % 60);
 
-    countdown.innerText = `Do spotkania: ${d} dni ${h}h ${m}min`;
+    countdown.innerText = Do spotkania: ${d} dni ${h}h ${m}min;
 }, 1000);
 
-/* SERDUSZKA NON-STOP — JAK BYŁY */
+/* SERDUSZKA NON-STOP */
 setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
