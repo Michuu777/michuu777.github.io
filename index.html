@@ -25,28 +25,36 @@ body {
 /* OKIENKO */
 .box {
     background: #fff7f7;
-    padding: 30px 35px;
-    border-radius: 22px;
+    padding: 34px 40px;
+    border-radius: 24px;
     text-align: center;
-    width: 520px;
-    max-width: 90%;
-    box-shadow: 0 12px 30px rgba(255, 105, 135, 0.35);
+    width: 600px;
+    max-width: 92%;
+    box-shadow: 0 14px 35px rgba(255, 105, 135, 0.35);
     z-index: 2;
+    position: relative;
 }
 
-/* NAGŁÓWEK – JAK NA SCREENIE */
+/* NAGŁÓWEK */
 h1 {
     color: #e60073;
-    font-size: 26px;
+    font-size: 27px;
     line-height: 1.3;
-    margin-bottom: 30px;
+    margin-bottom: 32px;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 /* PRZYCISKI */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    position: relative;
+}
+
 button {
-    padding: 12px 26px;
-    margin: 10px;
+    padding: 13px 30px;
     font-size: 16px;
     border-radius: 25px;
     border: none;
@@ -60,31 +68,31 @@ button {
 
 #no {
     background: #d9d9d9;
-    position: absolute;
+    transition: transform 0.15s ease;
 }
 
 /* WIADOMOŚĆ PO TAK */
 #message {
     display: none;
-    margin-top: 20px;
+    margin-top: 22px;
     color: #cc0066;
     font-size: 17px;
-    line-height: 1.4;
+    line-height: 1.45;
 }
 
 #countdown {
-    margin-top: 10px;
+    margin-top: 12px;
     font-weight: bold;
 }
 
-/* SERDUSZKA W TLE */
+/* SERDUSZKA — BEZ ZMIAN */
 .heart {
     position: fixed;
     bottom: -20px;
     font-size: 18px;
     animation: floatUp 6s linear forwards;
     pointer-events: none;
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 @keyframes floatUp {
@@ -105,8 +113,10 @@ button {
 <div class="box">
     <h1>Zostaniesz moją walentynką Wikusia? 😍 😍 ❤️</h1>
 
-    <button id="yes">TAK 💖</button>
-    <button id="no">NIE 🙈</button>
+    <div class="buttons">
+        <button id="yes">TAK 💖</button>
+        <button id="no">NIE 🙈</button>
+    </div>
 
     <div id="message">
         Nawet nie wiesz jak się cieszę, że wybrałaś TAK!! 🤪🤪🤪😘<br><br>
@@ -123,22 +133,20 @@ const yesBtn = document.getElementById("yes");
 const msg = document.getElementById("message");
 const countdown = document.getElementById("countdown");
 
-/* NIE UCIEKA ZAWSZE */
-noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - 120);
-    const y = Math.random() * (window.innerHeight - 60);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+/* NIE UCIEKA — ALE PRZEZ TRANSFORM (BEZ BLOKADY) */
+noBtn.addEventListener("mouseenter", () => {
+    const x = (Math.random() * 300 - 150);
+    const y = (Math.random() * 160 - 80);
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
 });
 
 /* TAK */
 yesBtn.addEventListener("click", () => {
-    yesBtn.style.display = "none";
-    noBtn.style.display = "none";
+    document.querySelector(".buttons").style.display = "none";
     msg.style.display = "block";
 });
 
-/* ODLICZANIE PO TAK */
+/* ODLICZANIE */
 const target = new Date("2026-02-14T16:00:00");
 setInterval(() => {
     if (msg.style.display !== "block") return;
@@ -158,7 +166,7 @@ setInterval(() => {
     countdown.innerText = `Do spotkania: ${d} dni ${h}h ${m}min`;
 }, 1000);
 
-/* SERDUSZKA NON-STOP */
+/* SERDUSZKA NON-STOP — JAK BYŁY */
 setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
