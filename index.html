@@ -3,64 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💘 Walentynka 💘</title>
+<title>Walentynka ❤️</title>
 
 <style>
-body {
+html, body {
     margin: 0;
-    height: 100vh;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Comic Sans MS', cursive;
     overflow: hidden;
 }
 
-.container {
-    background: rgba(255,255,255,0.93);
-    padding: 30px;
-    border-radius: 25px;
+/* OKIENKO */
+.box {
+    background: #fff7f7;
+    padding: 30px 35px;
+    border-radius: 22px;
     text-align: center;
+    width: 520px;
     max-width: 90%;
-    box-shadow: 0 0 25px rgba(255,0,100,0.4);
+    box-shadow: 0 12px 30px rgba(255, 105, 135, 0.35);
+    z-index: 2;
 }
 
+/* NAGŁÓWEK – JAK NA SCREENIE */
 h1 {
     color: #e60073;
-    font-size: 1.9em;
-    margin-bottom: 10px;
+    font-size: 26px;
+    line-height: 1.3;
+    margin-bottom: 30px;
+    font-weight: 600;
 }
 
-#countdown {
-    font-size: 1.2em;
-    color: #cc0066;
-    margin-bottom: 15px;
-}
-
-#musicBtn {
-    background: #ff4d88;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 12px 25px;
-    font-size: 1.1em;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-.buttons {
-    position: relative;
-    height: 120px;
-}
-
+/* PRZYCISKI */
 button {
-    font-size: 1.2em;
-    padding: 15px 30px;
-    border-radius: 30px;
+    padding: 12px 26px;
+    margin: 10px;
+    font-size: 16px;
+    border-radius: 25px;
     border: none;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 #yes {
@@ -68,140 +58,96 @@ button {
     color: white;
 }
 
-#yes:hover {
-    transform: scale(1.1);
-}
-
 #no {
-    background: #ccc;
+    background: #d9d9d9;
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 60px;
 }
 
-.no-text {
-    display: none;
-    margin-top: 15px;
-    color: #cc0066;
-    font-size: 1.1em;
-}
-
-.message {
+/* WIADOMOŚĆ PO TAK */
+#message {
     display: none;
     margin-top: 20px;
-    font-size: 1.25em;
     color: #cc0066;
+    font-size: 17px;
+    line-height: 1.4;
 }
 
+#countdown {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* SERDUSZKA W TLE */
 .heart {
     position: fixed;
-    font-size: 22px;
-    animation: floatUp 4s linear forwards;
+    bottom: -20px;
+    font-size: 18px;
+    animation: floatUp 6s linear forwards;
     pointer-events: none;
+    opacity: 0.8;
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-120vh); opacity: 0; }
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-</audio>
+<div class="box">
+    <h1>Zostaniesz moją walentynką Wikusia? 😍 😍 ❤️</h1>
 
-<div class="container">
-    <h1>Zostaniesz moją walentynką Wikusia? 😍❤️</h1>
+    <button id="yes">TAK 💖</button>
+    <button id="no">NIE 🙈</button>
 
-    <div id="countdown"></div>
-
-    <button id="musicBtn">🎵 Włącz muzykę</button>
-
-    <div class="buttons">
-        <button id="yes">TAK 💖</button>
-        <button id="no">NIE 🙈</button>
-    </div>
-
-    <div class="no-text" id="noText">
-        Oj nie… jeszcze za wcześnie na „nie” 😘😌
-    </div>
-
-    <div class="message" id="message">
-        💘💘💘<br><br>
-        Wiedziałem, że Twoje serce powie „tak”… ❤️<br><br>
-        W takim razie bądź gotowa <b>14 lutego o 15:00</b> 🌹  
-        <br>Już odliczam każdą chwilę, żeby Cię zobaczyć, myszeczko 😍
+    <div id="message">
+        Nawet nie wiesz jak się cieszę, że wybrałaś TAK!! 🤪🤪🤪😘<br><br>
+        Teraz się już tak łatwo mnie nie pozbędziesz!! 😍<br><br>
+        W takim razie, bądź gotowa słońce 14 lutego o godzinie 16,
+        przyjadę po ciebie! 🥰<br><br>
+        <div id="countdown"></div>
     </div>
 </div>
 
 <script>
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
-const message = document.getElementById("message");
-const noText = document.getElementById("noText");
-const music = document.getElementById("music");
-const musicBtn = document.getElementById("musicBtn");
-const countdownEl = document.getElementById("countdown");
+const msg = document.getElementById("message");
+const countdown = document.getElementById("countdown");
 
-let noCount = 0;
-let noCanMove = true;
-
-// muzyka
-musicBtn.addEventListener("click", () => {
-    music.play();
-    musicBtn.style.display = "none";
+/* NIE UCIEKA ZAWSZE */
+noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
 });
 
-// NIE ucieka tylko kilka razy
-noBtn.addEventListener("click", () => {
-    noCount++;
-    noText.style.display = "block";
-
-    if (noCanMove) {
-        const x = Math.random() * (window.innerWidth - 120);
-        const y = Math.random() * (window.innerHeight - 120);
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-    }
-
-    if (noCount >= 3) {
-        noCanMove = false;
-        setTimeout(() => noBtn.style.display = "none", 800);
-    }
-});
-
-// TAK = eksplozja serc
+/* TAK */
 yesBtn.addEventListener("click", () => {
-    message.style.display = "block";
     yesBtn.style.display = "none";
     noBtn.style.display = "none";
-    noText.style.display = "none";
-
-    for (let i = 0; i < 40; i++) {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.bottom = "-20px";
-        document.body.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 4000);
-    }
+    msg.style.display = "block";
 });
 
-// ODLICZANIE
-const targetDate = new Date("2026-02-14T15:00:00");
-
+/* ODLICZANIE PO TAK */
+const target = new Date("2026-02-14T16:00:00");
 setInterval(() => {
+    if (msg.style.display !== "block") return;
+
     const now = new Date();
-    const diff = targetDate - now;
+    const diff = target - now;
 
     if (diff <= 0) {
-        countdownEl.innerHTML = "To już dziś… ❤️";
+        countdown.innerText = "To już dziś ❤️";
         return;
     }
 
@@ -209,9 +155,19 @@ setInterval(() => {
     const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const m = Math.floor((diff / (1000 * 60)) % 60);
 
-    countdownEl.innerHTML =
-        `Do naszego spotkania zostało: <b>${d} dni ${h}h ${m}min</b> 💕`;
+    countdown.innerText = `Do spotkania: ${d} dni ${h}h ${m}min`;
 }, 1000);
+
+/* SERDUSZKA NON-STOP */
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 14 + 14 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}, 350);
 </script>
 
 </body>
